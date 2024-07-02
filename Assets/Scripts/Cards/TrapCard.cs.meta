@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7ef0a656c1fe1984b8105c6f1521f305
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cardType: {fileID: 11400000, guid: b78e3d12661b24446b67977c7245f34e, type: 2}
+  - faceDownSprite: {fileID: 21300000, guid: 50386b6249c8425479dc6595c35270a1, type: 3}
+  - faceUpSprite: {fileID: 21300000, guid: ee040842d55d8ca47b0927c557cd1b08, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

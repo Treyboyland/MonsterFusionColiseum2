@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7452b58c071ee694d98cf6739cb9b5f1, type: 3}
+  m_Name: DebugGrid-Alternate
+  m_EditorClassIdentifier: 
+  dimensions: {x: 7, y: 7}
+  alternations:
+  - {fileID: 11400000, guid: ce0bfc37cec0303448dc4453177fc65a, type: 2}
+  - {fileID: 11400000, guid: 1bead6b26ccc65e4d8916328d5d8542d, type: 2}
+  - {fileID: 11400000, guid: d4d90d5987c66544d8709830e4699f84, type: 2}

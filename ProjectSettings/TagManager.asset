@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 8622455
+    locked: 0
+  - name: Tile
+    uniqueID: 1025946877
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: TileHighlight
+    uniqueID: 1604751677
+    locked: 0
+  - name: Card
+    uniqueID: 3311057753
+    locked: 0
+  - name: Cursor
+    uniqueID: 1327524401
+    locked: 0
+  - name: MiniUI
+    uniqueID: 467658389
+    locked: 0

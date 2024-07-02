@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c42b3fd0a613fcb40b3210aba3692984
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - golem: {fileID: 11400000, guid: 81944e14f2f88d44981f9ea131ea9cb4, type: 2}
+  - crystal: {fileID: 11400000, guid: 302788f9c5dc98243817ab98d6da3495, type: 2}
+  - humanoid: {fileID: 11400000, guid: b41dda63f1f86984daa2fb41e6c4f212, type: 2}
+  - beast: {fileID: 11400000, guid: 8202da0c2a877394cb1090f22a26c0b3, type: 2}
+  - machine: {fileID: 11400000, guid: b3db3de5818e5ff48b28f04bcabfda59, type: 2}
+  - slime: {fileID: 11400000, guid: 4b049287900c7a14e8645a364573b0b1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
