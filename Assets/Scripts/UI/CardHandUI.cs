@@ -21,10 +21,22 @@ public class CardHandUI : MonoBehaviour
 
     public bool SelectedForFusion { get => fusionIndexObject.activeInHierarchy; set { fusionIndexObject.SetActive(value); } }
 
-    public int FusionIndex { set { fusionIndexText.text = $"{value}"; } }
+    public Card CurrentCard => cardUIMini.CurrentCard;
+
+    int fusionIndex;
+
+    public int FusionIndex
+    {
+        get => fusionIndex;
+        set
+        {
+            fusionIndex = value;
+            fusionIndexText.text = $"{fusionIndex}";
+        }
+    }
 
     public int HandIndex { get; set; } = 0;
-    
+
     public void SetCardData(Card card)
     {
         cardUIMini.DisplayData(card);

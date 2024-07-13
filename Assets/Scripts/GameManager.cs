@@ -1,10 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    TileCursor tileCursor;
+
+    [SerializeField]
+    FusionResolver fusionResolver;
+
+    [SerializeField]
+    PlayerInput input;
+
+    [SerializeField]
+    Player player;
+
+    [SerializeField]
+    string playerMap;
+
+    [SerializeField]
+    string uiMap;
+
+    [SerializeField]
+    PlayerHandUI playerHandUI;
+
     [SerializeField]
     GameState currentState;
 
@@ -34,6 +57,15 @@ public class GameManager : MonoBehaviour
     CardTypeCompare cardTypeCompare;
 
     GameCard activeCard;
+
+    public GameState CurrentState
+    {
+        get => currentState; protected set
+        {
+            currentState = value;
+            UpdateStateStuff();
+        }
+    }
 
     void Awake()
     {
@@ -69,28 +101,69 @@ public class GameManager : MonoBehaviour
         if (card.CardOwner == playerOwner)
         {
             activeCard = card;
-            activeCard.IsSelected = true;
-            currentState = movingCardState;
-            highlights.ShowValidMovementPositions(activeCard);
+            CurrentState = movingCardState;
         }
 
-        if (activeCard != null)
+        // if (activeCard != null)
+        // {
+        //     if (!cardAtPosition)
+        //     {
+        //         cardsInPlay.MoveGameCardToPosition(activeCard, gridPosition);
+        //         activeCard.IsSelected = false;
+        //         activeCard = null;
+        //         currentState = normalState;
+        //     }
+        //     else
+        //     {
+        //         var newCard = cardsInPlay.GetGameCardAtPosition(gridPosition);
+        //         if (newCard.CardOwner == playerOwner)
+        //         {
+        //             //Fusion stuff
+        //         }
+        //     }
+        // }
+    }
+
+    void UpdateStateStuff()
+    {
+        if (currentState == normalState)
         {
-            if (!cardAtPosition)
+            input.SwitchCurrentActionMap(playerMap);
+            highlights.DisableHighlight();
+            if (activeCard != null)
             {
-                cardsInPlay.MoveGameCardToPosition(activeCard, gridPosition);
                 activeCard.IsSelected = false;
                 activeCard = null;
-                currentState = normalState;
             }
-            else
+            playerHandUI.HideHand();
+            cardUIController.HideUI();
+        }
+        else if (currentState == movingCardState)
+        {
+            if (activeCard != null)
             {
-                var newCard = cardsInPlay.GetGameCardAtPosition(gridPosition);
-                if (newCard.CardOwner == playerOwner)
-                {
-                    //Fusion stuff
-                }
+                activeCard.IsSelected = true;
+                highlights.ShowValidMovementPositions(activeCard);
             }
+        }
+        else if (currentState == selectingSummonPositionState)
+        {
+            input.SwitchCurrentActionMap(playerMap);
+            playerHandUI.HideHand();
+            if (activeCard != null)
+            {
+                highlights.ShowValidSummonPositions(activeCard);
+            }
+        }
+        else if (currentState == selectingCardsState)
+        {
+            input.SwitchCurrentActionMap(uiMap);
+            playerHandUI.ShowHand();
+        }
+        else if (currentState == infoState)
+        {
+            input.SwitchCurrentActionMap(uiMap);
+            cardUIController.ShowUI();
         }
     }
 
@@ -104,24 +177,38 @@ public class GameManager : MonoBehaviour
         if (!cardAtPosition)
         {
             cardsInPlay.MoveGameCardToPosition(activeCard, gridPosition);
-            activeCard.IsSelected = false;
-            activeCard = null;
-            currentState = normalState;
-            highlights.DisableHighlight();
+            CurrentState = normalState;
         }
         else
         {
             var newCard = cardsInPlay.GetGameCardAtPosition(gridPosition);
             if (newCard == activeCard)
             {
-                activeCard.IsSelected = false;
-                activeCard = null;
-                currentState = normalState;
-                highlights.DisableHighlight();
+                CurrentState = normalState;
             }
             else if (newCard.CardOwner == playerOwner)
             {
-                //TODO: Fusion
+                if (cardTypeCompare.IsLeader(activeCard.CurrentCardData.CardType))
+                {
+                    //Leaders overwrite their cards without fusion
+                    cardsInPlay.RemoveFromPlay(newCard);
+                    cardsInPlay.MoveGameCardToPosition(activeCard, gridPosition);
+                    CurrentState = normalState;
+                }
+                else
+                {
+                    //TODO: Fusion
+                    List<Card> fusionCards = new List<Card>() { newCard.CurrentCardData, activeCard.CurrentCardData };
+                    var fusionResult = fusionResolver.ResolveFusion(fusionCards);
+                    Debug.LogWarning(fusionResult.FusionSteps);
+                    cardsInPlay.CreateCard(fusionResult, gridPosition, player);
+
+                    //Remove previous fusion card from play
+                    activeCard.IsSelected = false;
+                    cardsInPlay.RemoveFromPlay(activeCard);
+                    activeCard = null;
+                    CurrentState = normalState;
+                }
             }
         }
     }
@@ -134,14 +221,12 @@ public class GameManager : MonoBehaviour
             var card = cardsInPlay.GetGameCardAtPosition(gridPosition);
             if (card.CardOwner == playerOwner && !cardTypeCompare.IsLeader(card.CurrentCardData.CardType))
             {
-                //TODO: Summon 
-                currentState = selectingCardsState;
+                CurrentState = selectingCardsState;
             }
         }
         else
         {
-            //TODO: Summon
-            currentState = selectingCardsState;
+            CurrentState = selectingCardsState;
         }
     }
 
@@ -161,11 +246,9 @@ public class GameManager : MonoBehaviour
                     }
                     else if (cardTypeCompare.IsLeader(card.CurrentCardData.CardType))
                     {
-                        //TODO: Summon
-                        currentState = selectingSummonPositionState;
                         activeCard = card;
                         activeCard.IsSelected = true;
-                        highlights.ShowValidSummonPositions(activeCard);
+                        CurrentState = selectingSummonPositionState;
                     }
                 }
             }
@@ -176,27 +259,19 @@ public class GameManager : MonoBehaviour
     {
         if (currentState == selectingSummonPositionState)
         {
-            currentState = normalState;
-            activeCard.IsSelected = false;
-            activeCard = null;
-            highlights.DisableHighlight();
+            CurrentState = normalState;
         }
-        else if (currentState == movingCardState)
+        else if (CurrentState == movingCardState)
         {
-            currentState = normalState;
-            activeCard.IsSelected = false;
-            activeCard = null;
-            highlights.DisableHighlight();
+            CurrentState = normalState;
         }
         else if (currentState == infoState)
         {
-            currentState = normalState;
-            cardUIController.HideUI();
+            CurrentState = normalState;
         }
         else if (currentState == selectingCardsState)
         {
-            currentState = selectingSummonPositionState;
-            //TOOD: Hide summon ui
+            CurrentState = selectingSummonPositionState;
         }
     }
 
@@ -210,10 +285,8 @@ public class GameManager : MonoBehaviour
                 var card = cardsInPlay.GetGameCardAtPosition(gridPosition);
                 if (card.CardOwner == playerOwner || card.FaceUp)
                 {
-                    currentState = infoState;
-                    //TODO: Show info window for card
                     cardUIController.SetData(card);
-                    cardUIController.ShowUI();
+                    CurrentState = infoState;
                 }
             }
         }
@@ -250,5 +323,27 @@ public class GameManager : MonoBehaviour
         {
             return currentPosition;
         }
+    }
+
+    public void PerformSummon()
+    {
+        StringBuilder sb = new StringBuilder();
+        var cards = playerHandUI.GetFusionList();
+
+        if (cardsInPlay.HasCardAtPosition(tileCursor.CurrentPosition))
+        {
+            //Do we need to check again for ownership?
+            var cardInPlay = cardsInPlay.GetGameCardAtPosition(tileCursor.CurrentPosition);
+            cards.Insert(0, cardInPlay.CurrentCardData);
+        }
+
+        var fusionResult = fusionResolver.ResolveFusion(cards);
+        foreach (var card in cards)
+        {
+            player.RemoveFromHand(card);
+        }
+        Debug.LogWarning(fusionResult.FusionSteps);
+        cardsInPlay.CreateCard(fusionResult, tileCursor.CurrentPosition, player);
+        CurrentState = normalState;
     }
 }

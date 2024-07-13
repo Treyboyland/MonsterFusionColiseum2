@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f65e1b7b8e9ecf45971c84f4d730add, type: 3}
+  m_Name: Attack-Chomp
+  m_EditorClassIdentifier: 
+  attackName: Chomp
+  description: A more powerful bite
+  amount: 50
+  manaRequirement: 2
+  isHeal: 0
+  targetAllies: 0
+  targetSelf: 0
+  targetEveryone: 0
+  affectsAllWithinRange: 0
+  areaOfEffect: {fileID: 11400000, guid: 100d8410df17b7f43b9d0645038bff0c, type: 2}

@@ -27,11 +27,11 @@ public class CardUIMini : CardUI
         if (cardTypeCompare.IsMonster(cardData.CardType))
         {
             var monster = (MonsterCard)cardData;
-            typeText.Append($"{monster.MonsterAttribute} / {monster.Element}");
+            typeText.Append($"{monster.MonsterAttribute.AttributeName} / {monster.Element.ElementName}");
         }
         else
         {
-            typeText.Append($"{cardData.CardType}");
+            typeText.Append($"{cardData.CardType.TypeName}");
         }
         typeText.Append("]");
         cardTypeText.text = typeText.ToString();
@@ -41,6 +41,7 @@ public class CardUIMini : CardUI
 
     public override void DisplayData(Card cardData)
     {
+        CurrentCard = cardData;
         DisplayGeneralData(cardData);
     }
 

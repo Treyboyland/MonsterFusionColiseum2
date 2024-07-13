@@ -12,17 +12,41 @@ public class SpellCardEquip : Card
     bool isAttackBoost;
 
     [SerializeField]
-    bool isElementBoost;
+    bool isManaBoost;
 
     [SerializeField]
     int boostAmount;
 
     [SerializeField]
-    Element elementBoosted;
+    List<SpellLevelBoost> levelBoosts;
 
     public bool IsHealthBoost { get => isHealthBoost; }
     public bool IsAttackBoost { get => isAttackBoost; }
-    public bool IsElementBoost { get => isElementBoost; }
-    public int BoostAmount { get => boostAmount; }
-    public Element ElementBoosted { get => elementBoosted; }
+    public bool IsManaBoost { get => isManaBoost; }
+
+    public struct SpellLevelBoost
+    {
+        public int BoostAmount;
+
+        /// <summary>
+        /// If false, will assume this is a multiplicative boost
+        /// </summary>
+        public bool IsAddiditive;
+        public int LevelThisIsIncluded;
+    }
+
+    public int GetBoostedAmount(int level)
+    {
+        int result = boostAmount;
+
+        foreach (var levelBoost in levelBoosts)
+        {
+            if (level >= levelBoost.LevelThisIsIncluded)
+            {
+                result = levelBoost.IsAddiditive ? result + levelBoost.BoostAmount : result * levelBoost.BoostAmount;
+            }
+        }
+
+        return result;
+    }
 }

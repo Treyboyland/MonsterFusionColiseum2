@@ -47,6 +47,21 @@ public class Deck<T>
 }
 
 [Serializable]
+public struct CardAndLevelSO
+{
+    public Card Card;
+    public int Level;
+}
+
+[Serializable]
+public struct CardAndLevel
+{
+    public string CardName;
+    public int Level;
+}
+
+
+[Serializable]
 public struct CardAndCount
 {
     public Card Card;

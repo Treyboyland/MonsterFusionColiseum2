@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class CardOptions : MonoBehaviour
 {
     [SerializeField]
-    CardOptionButton buttonPrefab;
+    CardOptionButtonUI buttonPrefab;
 
     [SerializeField]
-    CardType leader, monster;
+    CardTypeCompare cardTypeCompare;
 
     [Header("State")]
     [SerializeField]
@@ -28,14 +28,14 @@ public class CardOptions : MonoBehaviour
 
     GameState currentState;
 
-    ObjectPool<CardOptionButton> buttonPool;
+    ObjectPool<CardOptionButtonUI> buttonPool;
 
     Card currentCard;
 
     // Start is called before the first frame update
     void Start()
     {
-        buttonPool = new ObjectPool<CardOptionButton>(buttonPrefab);
+        buttonPool = new ObjectPool<CardOptionButtonUI>(buttonPrefab);
     }
 
     void GoBack()
@@ -60,7 +60,7 @@ public class CardOptions : MonoBehaviour
         // {
         //     CreateOptions(summonOption, backOption);
         // }
-        if (currentCard.CardType == monster)
+        if (cardTypeCompare.IsMonster(currentCard.CardType))
         {
             //TODO: Ability option should be based on having a manual ability
             CreateOptions(attackOption, backOption);

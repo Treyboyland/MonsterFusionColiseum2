@@ -7,8 +7,8 @@ MonoImporter:
   - cardType: {fileID: 11400000, guid: 28d54bdc32bceed4abb19377111119f3, type: 2}
   - faceDownSprite: {fileID: 21300000, guid: 50386b6249c8425479dc6595c35270a1, type: 3}
   - faceUpSprite: {instanceID: 0}
-  - element: {instanceID: 0}
-  - monsterAttribute: {instanceID: 0}
+  - element: {fileID: 11400000, guid: c14e628b45a2d5d4ca30bb34f96c6776, type: 2}
+  - monsterAttribute: {fileID: 11400000, guid: 8202da0c2a877394cb1090f22a26c0b3, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

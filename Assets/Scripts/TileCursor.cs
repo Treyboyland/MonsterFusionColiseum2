@@ -18,6 +18,8 @@ public class TileCursor : MonoBehaviour
 
     Vector2Int currentPosition;
 
+    public Vector2Int CurrentPosition { get => currentPosition; }
+
     public void SetPosition(Vector2Int pos)
     {
         currentPosition = manager.AttemptMoveToPosition(pos, currentPosition);
@@ -34,7 +36,7 @@ public class TileCursor : MonoBehaviour
             return;
         }
 
-        if (context.phase != InputActionPhase.Started)
+        if (context.phase != InputActionPhase.Performed)
         {
             return;
         }
@@ -51,7 +53,7 @@ public class TileCursor : MonoBehaviour
 
     public void OnAccept(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Performed)
         {
             manager.OnPositionSelected(currentPosition);
         }
@@ -59,7 +61,7 @@ public class TileCursor : MonoBehaviour
 
     public void OnBack(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Performed)
         {
             manager.OnPositionCancel(currentPosition);
         }
@@ -67,7 +69,7 @@ public class TileCursor : MonoBehaviour
 
     public void OnFlip(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Performed)
         {
             manager.OnPositionFlip(currentPosition);
         }
@@ -75,7 +77,7 @@ public class TileCursor : MonoBehaviour
 
     public void OnInfo(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Performed)
         {
             manager.OnPositionInfo(currentPosition);
         }
@@ -83,7 +85,7 @@ public class TileCursor : MonoBehaviour
 
     public void OnAbility(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Performed)
         {
             manager.OnPositionAbility(currentPosition);
         }

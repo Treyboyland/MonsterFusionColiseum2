@@ -33,7 +33,7 @@ public class CardUILarge : CardUI
         if (cardTypeCompare.IsMonster(cardData.CardType))
         {
             healthText.text = $"{card.CurrentHealth} / {card.MaxHealth}";
-            currentEquippedElementsText.text = card.GetEquippedElements();
+            currentEquippedElementsText.text = card.GetEquippedMana();
         }
         else
         {
@@ -59,10 +59,10 @@ public class CardUILarge : CardUI
 
     public override void DisplayData(GameCard card)
     {
-        var cardData = card.CurrentCardData;
+        CurrentCard = card.CurrentCardData;
 
         GameCardSpecificText(card);
-        DisplayGeneralData(cardData);
+        DisplayGeneralData(CurrentCard);
     }
 
     void DisplayGeneralData(Card cardData)
@@ -74,11 +74,11 @@ public class CardUILarge : CardUI
         if (cardTypeCompare.IsMonster(cardData.CardType))
         {
             var monster = (MonsterCard)cardData;
-            typeText.Append($"{monster.MonsterAttribute} / {monster.Element}");
+            typeText.Append($"{monster.MonsterAttribute.AttributeName} / {monster.Element.ElementName}");
         }
         else
         {
-            typeText.Append($"{cardData.CardType}");
+            typeText.Append($"{cardData.CardType.TypeName}");
         }
         typeText.Append("]");
 
@@ -91,6 +91,7 @@ public class CardUILarge : CardUI
 
     public override void DisplayData(Card cardData)
     {
+        CurrentCard = cardData;
         CardSpecificText(cardData);
         DisplayGeneralData(cardData);
     }

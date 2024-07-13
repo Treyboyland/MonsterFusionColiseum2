@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e9756c4bceb4d4896b9422e561fd08, type: 3}
   m_Name: Card-Monster-GreenSlime
   m_EditorClassIdentifier: 
-  cardName: Blue Slime
+  cardName: Green Slime
   description: Slime with the power of earth. Damp to the touch
   cardType: {fileID: 11400000, guid: 28d54bdc32bceed4abb19377111119f3, type: 2}
   faceDownSprite: {fileID: 21300000, guid: 50386b6249c8425479dc6595c35270a1, type: 3}
   faceUpSprite: {fileID: 0}
+  healthBoostPerLevel: 10
+  attackBoostPerLevel: 10
   cardOptions: []
   element: {fileID: 11400000, guid: c14e628b45a2d5d4ca30bb34f96c6776, type: 2}
   monsterAttribute: {fileID: 11400000, guid: 4b049287900c7a14e8645a364573b0b1, type: 2}
   maxHealth: 30
+  abilities: []
+  attacks: []
